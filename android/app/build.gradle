@@ -36,6 +36,20 @@ android {
         disable 'InvalidPackage'
     }
 
+    signingConfigs {
+        debug {
+            storeFile file('C:/Users/deivi/Documents/university_advisor/key.jks')
+            storePassword 'that is none of your business'
+            keyAlias 'androiddebugkey'
+            keyPassword 'that is none of your business'
+        }
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+    }
+
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.example.university_advisor"

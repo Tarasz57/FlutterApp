@@ -1,34 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:university_advisor/screens/login_screen.dart';
 
-void main() => runApp(MaterialApp(
-    home: MyApp())
-  );
-
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => new _MyAppState();
+void main(){
+    //debugPaintSizeEnabled = true;
+    runApp(MyApp());
 }
 
-class _MyAppState extends State<MyApp> {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      backgroundColor: Colors.white,
-      resizeToAvoidBottomInset: true,
-      body: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(top: 20.0),
-                child: Image.asset("assets/logo_midsize.png"),
-              )
-            ],
-          )
-        ],
-      ),
+    return MaterialApp(
+      title: 'Flutter Login UI',
+      debugShowCheckedModeBanner: false,
+      home: LoginScreen(),
     );
   }
 }

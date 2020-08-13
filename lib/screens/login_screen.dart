@@ -9,7 +9,22 @@ class LoginScreen extends StatefulWidget {
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin{
+
+  AnimationController animationController;
+  Animation<double> animation;
+
+  @override
+   void initState() {
+     super.initState();
+      animationController = AnimationController(
+        duration: Duration(seconds: 2),
+        vsync: this,
+     );
+     animation = CurvedAnimation(parent: animationController, curve: Curves.easeIn);
+     animationController.forward();
+   }
+
   _getFbLogin() async {
     final facebookLogin = FacebookLogin();
     final result = await facebookLogin.logIn(['email']);
@@ -96,56 +111,62 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light,
-      child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Stack(
-            children: <Widget>[
-              Container(
-                  height: double.infinity,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                        Color(0xFF4CAF50),
-                        Color(0xFF43A047),
-                        Color(0xFF388E3C),
-                        Color(0xFF2E7D32),
-                        Color(0xFF1B5E20),
-                      ],
-                          stops: [
-                        0.1,
-                        0.3,
-                        0.5,
-                        0.7,
-                        0.9
-                      ]))),
-              Container(
-                alignment: Alignment.center,
-                height: double.infinity,
-                child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Sign In',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'OpenSans',
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.bold),
+        value: SystemUiOverlayStyle.light,
+        child: GestureDetector(
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: Stack(
+              children: <Widget>[
+                Container(
+                    height: double.infinity,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                          Color(0xFF4CAF50),
+                          Color(0xFF43A047),
+                          Color(0xFF388E3C),
+                          Color(0xFF2E7D32),
+                          Color(0xFF1B5E20),
+                        ],
+                            stops: [
+                          0.1,
+                          0.3,
+                          0.5,
+                          0.7,
+                          0.9
+                        ]))),
+                FadeTransition(
+                  opacity: animation,
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: double.infinity,
+                    child: SingleChildScrollView(
+                      physics: AlwaysScrollableScrollPhysics(),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'Sign In',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'OpenSans',
+                              fontSize: 30.0,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                          SizedBox(height: 30.0),
+                          _buildSignInButtonColumn(),
+                        ],
                       ),
-                      SizedBox(height: 30.0),
-                      _buildSignInButtonColumn(),
-                    ],
-                  ),
-                ),
-              )
-            ],
-          )),
-    ));
+                    ),
+                  )
+                )
+              ],
+            )
+          )
+        ),
+    );
   }
 }
